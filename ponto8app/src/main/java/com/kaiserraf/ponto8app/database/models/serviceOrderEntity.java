@@ -33,6 +33,6 @@ public class serviceOrderEntity {
     @JoinColumn(name = "vehicle_id")
     private vehicleEntity vehicle;
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "mechanic")
     private usersEntity mechanic;
 }

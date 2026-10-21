@@ -45,7 +45,7 @@ ponto8app/
 ### 2.1. clients
 | Coluna | Tipo | Restrições |
 |---|---|---|
-| `id` | SERIAL | PK |
+| `id` | UUID | PK |
 | `name` | VARCHAR(100) | NOT NULL |
 | `address` | VARCHAR(200) | NOT NULL |
 | `phone` | BIGINT | NOT NULL |
@@ -55,7 +55,7 @@ ponto8app/
 ### 2.2. vehicles
 | Coluna | Tipo | Restrições |
 |---|---|---|
-| `id_vehicle` | SERIAL | PK |
+| `id` | UUID | PK |
 | `vehicle_model` | VARCHAR(60) | NOT NULL |
 | `vehicle_brand` | VARCHAR(60) | NOT NULL |
 | `year` | INT | NOT NULL |
@@ -66,22 +66,22 @@ ponto8app/
 ### 2.3. parts
 | Coluna | Tipo | Restrições |
 |---|---|---|
-| `id_part` | SERIAL | PK |
-| `name_part` | VARCHAR(100) | NOT NULL |
-| `amount` | INT | NOT NULL, DEFAULT 0 |
+| `id` | UUID | PK |
+| `name` | VARCHAR(100) | NOT NULL |
+| `amount` | float | NOT NULL, DEFAULT 0 |
 | `buy_value` | NUMERIC(10,2) | NOT NULL |
 | `sale_value` | NUMERIC(10,2) | NOT NULL |
 
 ### 2.4. labors
 | Coluna | Tipo | Restrições |
 |---|---|---|
-| `id_labor` | SERIAL | PK |
-| `labor_name` | VARCHAR(100) | NOT NULL |
+| `id` | UUID | PK |
+| `labor` | VARCHAR(100) | NOT NULL |
 
 ### 2.5. users
 | Coluna | Tipo | Restrições |
 |---|---|---|
-| `id` | SERIAL | PK |
+| `id` | UUID | PK |
 | `name` | VARCHAR(100) | NOT NULL |
 | `email` | VARCHAR(100) | NOT NULL, UNIQUE |
 | `password_hash` | VARCHAR(255) | NOT NULL |
@@ -90,41 +90,41 @@ ponto8app/
 ### 2.6. refresh_tokens
 | Coluna | Tipo | Restrições |
 |---|---|---|
-| `id` | SERIAL | PK |
-| `user_id` | INT | FK → `users.id`, `ON DELETE CASCADE` |
+| `id` | UUID | PK |
+| `user_id` | UUID | FK → `users.id`, `ON DELETE CASCADE` |
 | `token` | TEXT | NOT NULL, UNIQUE |
 | `expires_at` | TIMESTAMP | NOT NULL |
 | `created_at` | TIMESTAMP | NOT NULL, DEFAULT NOW() |
 
-### 2.6. service_orders
+### 2.7. service_orders
 | Coluna | Tipo | Restrições |
 |---|---|---|
-| `id_so` | SERIAL | PK |
-| `id_client` | INT | NOT NULL, FK → `clients.id` |
-| `id_vehicle` | INT | NOT NULL, FK → `vehicles.id_vehicle` |
-| `mechanic` | INT | NOT NULL, FK → `users.id` |
+| `id` | UUID | PK |
+| `client_id` | UUID | NOT NULL, FK → `clients.id` |
+| `vehicle_id` | UUID | NOT NULL, FK → `vehicles.id` |
+| `mechanic` | UUID | NOT NULL, FK → `users.id` |
 | `description` | TEXT | — |
 | `total_price` | NUMERIC(10,2) | NOT NULL, DEFAULT 0 |
 | `pdf_path` | VARCHAR(300) | — |
 | `created_at` | TIMESTAMP | NOT NULL, DEFAULT NOW() |
 
-### 2.7. order_parts
+### 2.8. order_parts
 | Coluna | Tipo | Restrições |
 |---|---|---|
-| `id` | SERIAL | PK |
-| `id_so` | INT | NOT NULL, FK → `service_orders.id_so`, `ON DELETE CASCADE` |
-| `id_part` | INT | NOT NULL, FK → `parts.id_part` |
-| `amount` | INT | NOT NULL |
-| `unit_price` | NUMERIC(10,2) | NOT NULL |
+| `id` | UUID | PK |
+| `service_order_id` | UUID | NOT NULL, FK → `service_orders.id`, `ON DELETE CASCADE` |
+| `id_part` | UUID | NOT NULL, FK → `parts.id` |
+| `amount` | float | NOT NULL |
+| `total_price` | NUMERIC(10,2) | NOT NULL |
 
-### 2.8. order_labor
+### 2.9. order_labor
 | Coluna | Tipo | Restrições |
 |---|---|---|
-| `id` | SERIAL | PK |
-| `id_so` | INT | NOT NULL, FK → `service_orders.id_so`, `ON DELETE CASCADE` |
-| `id_labor` | INT | NOT NULL, FK → `labors.id_labor` |
-| `amount` | INT | NOT NULL, DEFAULT 1 |
-| `unit_price` | NUMERIC(10,2) | NOT NULL |
+| `id` | UUID | PK |
+| `service_order_id` | UUID | NOT NULL, FK → `service_orders.id`, `ON DELETE CASCADE` |
+| `labor_id` | UUID | NOT NULL, FK → `labors.id` |
+| `amount` | float | NOT NULL, DEFAULT 1 |
+| `total_price` | NUMERIC(10,2) | NOT NULL |
 
 ## 3. Padrão de Resposta
 

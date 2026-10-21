@@ -22,6 +22,8 @@ public class clientsEntity {
     private String name;
     @Column(nullable = false)
     private String address;
+    @Column(nullable = false)
+    private String phone;
     @Column(nullable = false, unique = true)
     private String cpf;
     @Column(nullable = false, unique = true)

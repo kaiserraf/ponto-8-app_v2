@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -15,7 +13,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Builder
-public class refreshToken {
+public class refreshTokenEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;

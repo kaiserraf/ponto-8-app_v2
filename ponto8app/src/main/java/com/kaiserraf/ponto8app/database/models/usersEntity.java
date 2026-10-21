@@ -20,12 +20,12 @@ public class usersEntity {
     private String name;
     @Column(nullable = false, unique = true)
     private String email;
-    @Column(nullable = false)
+    @Column(name = "password_hash", nullable = false)
     private String passwordHash;
-    @Column(nullable = false)
-    private Date createdDate;
+    @Column(name = "created_at", nullable = false)
+    private Date createdAt;
     @OneToMany(mappedBy = "user")
-    private Set<refreshToken> refreshTokens = new HashSet<>();
+    private Set<refreshTokenEntity> refreshTokens = new HashSet<>();
     @OneToMany(mappedBy = "mechanic")
     private Set<serviceOrderEntity> serviceOrder = new HashSet<>();
 }

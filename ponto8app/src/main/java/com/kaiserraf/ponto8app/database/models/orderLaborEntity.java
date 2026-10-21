@@ -16,12 +16,14 @@ public class orderLaborEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+    @Column(nullable = false)
     private float amount;
+    @Column(name = "total_price", nullable = false)
     private float totalPrice;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "service_order_id")
     private serviceOrderEntity serviceOrder;
-    @OneToOne
-    @JoinColumn(name = "id_labor")
+    @ManyToOne
+    @JoinColumn(name = "labor_id")
     private laborEntity labor;
 }
